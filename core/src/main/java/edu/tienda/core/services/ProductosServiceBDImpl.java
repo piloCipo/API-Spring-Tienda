@@ -64,4 +64,10 @@ public class ProductosServiceBDImpl implements ProductoService{
         return actualizado;
     }
 
+    @Override
+    public void deleteProducto(int id) {
+        productosRepository.deleteById(id);
+    }
+
+
 }

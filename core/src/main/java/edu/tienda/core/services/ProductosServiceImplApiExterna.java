@@ -42,4 +42,9 @@ public class ProductosServiceImplApiExterna implements ProductoService{
 
         return producto;
     }
+
+    @Override
+    public void deleteProducto(int id){
+
+    }
 }

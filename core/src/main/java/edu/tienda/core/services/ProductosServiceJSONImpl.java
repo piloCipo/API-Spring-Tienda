@@ -43,4 +43,9 @@ public class ProductosServiceJSONImpl implements ProductoService{
 
         return producto;
     }
+
+    @Override
+    public void deleteProducto(int id){
+
+    }
 }

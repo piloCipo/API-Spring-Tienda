@@ -9,6 +9,9 @@ public interface ProductoService {
 
     public void saveProducto(Producto producto);
 
+    public Producto modificarProducto(Producto producto);
 
-    Producto modificarProducto(Producto producto);
+    public default void deleteProducto(int id){
+
+    }
 }

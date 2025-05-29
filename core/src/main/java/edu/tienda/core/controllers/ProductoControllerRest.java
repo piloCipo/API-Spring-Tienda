@@ -59,6 +59,13 @@ public class ProductoControllerRest {
         return ResponseEntity.ok(productoActualizado);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteProducto(@PathVariable int id) {
+        productosService.deleteProducto(id);
+        return ResponseEntity.noContent().build();
+    }
+
+
 
 
     // Endpoint de prueba para obtener productos fake.
