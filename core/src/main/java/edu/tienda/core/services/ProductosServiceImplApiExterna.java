@@ -10,6 +10,12 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
+// Este servicio obtiene productos desde una API externa simulada.
+// Para usarlo, cambiar `productos.estrategia=EN_BD` por `EN_OTRA_API` en application.properties.
+//
+// This service fetches products from a simulated external API.
+// To use it, change `productos.estrategia=EN_BD` to `EN_OTRA_API` in application.properties.
+
 @Service
 @ConditionalOnProperty(
         value = "productos.estrategia",
@@ -29,5 +35,11 @@ public class ProductosServiceImplApiExterna implements ProductoService{
     }
     @Override
     public void saveProducto(Producto producto) {
+    }
+
+    @Override
+    public Producto modificarProducto(Producto producto) {
+
+        return producto;
     }
 }

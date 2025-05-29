@@ -11,6 +11,11 @@ import javax.imageio.IIOException;
 import java.io.IOException;
 import java.util.List;
 
+// Este servicio carga productos desde un archivo JSON en resources.
+// Para usarlo, cambiar `productos.estrategia=EN_BD` por `EN_JSON` en application.properties.
+// This service loads products from a JSON file in the resources folder.
+// To use it, change `productos.estrategia=EN_BD` to `EN_JSON` in application.properties.
+
 @Service("JSON")
 @ConditionalOnProperty(
         value = "productos.estrategia",
@@ -31,5 +36,11 @@ public class ProductosServiceJSONImpl implements ProductoService{
 
     @Override
     public void saveProducto(Producto producto) {
+    }
+
+    @Override
+    public Producto modificarProducto(Producto producto) {
+
+        return producto;
     }
 }

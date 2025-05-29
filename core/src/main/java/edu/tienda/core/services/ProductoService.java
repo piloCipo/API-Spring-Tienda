@@ -8,4 +8,7 @@ public interface ProductoService {
     public List<Producto> getProductos();
 
     public void saveProducto(Producto producto);
+
+
+    Producto modificarProducto(Producto producto);
 }
