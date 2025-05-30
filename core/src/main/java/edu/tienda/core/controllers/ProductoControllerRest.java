@@ -1,15 +1,16 @@
 package edu.tienda.core.controllers;
 
 import edu.tienda.core.configurations.ConfigurationParameters;
-import edu.tienda.core.domain.Cliente;
 import edu.tienda.core.domain.Producto;
-import edu.tienda.core.exceptions.ResourceNotFoundException;
+import edu.tienda.core.exceptions.BadRequestException;
 import edu.tienda.core.services.ProductoService;
-import edu.tienda.core.services.ProductosServiceImpl;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -17,10 +18,14 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/productos")
+@Validated
 public class ProductoControllerRest {
+
+
 
     @Autowired
     @Lazy
@@ -28,6 +33,7 @@ public class ProductoControllerRest {
 
     @Autowired
     private ConfigurationParameters configurationParameters;
+
 
     @GetMapping
     public ResponseEntity<?> getProductos(){
@@ -41,16 +47,22 @@ public class ProductoControllerRest {
         return ResponseEntity.ok(productos);
     }
 
-
     @PostMapping
-    public ResponseEntity<?> altaProducto(@RequestBody Producto producto){
-        productosService.saveProducto(producto);
+    public ResponseEntity<?> altaProducto(@Valid @RequestBody Producto producto, BindingResult result){
+        if (result.hasErrors()) {
+            String errores = result.getAllErrors().stream()
+                    .map(e -> e.getDefaultMessage())
+                    .collect(Collectors.joining(", "));
+            throw  new BadRequestException(errores);
+        }
+
+        Producto creado = productosService.saveProducto(producto);
 
         URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest().path("/{id")
-                .buildAndExpand(producto.getId())
+                .fromCurrentRequest().path("/{id}")
+                .buildAndExpand(creado.getId())
                 .toUri();
-        return ResponseEntity.created(location).body(producto);
+        return ResponseEntity.created(location).body(creado);
     }
 
     @PutMapping
@@ -60,7 +72,7 @@ public class ProductoControllerRest {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteProducto(@PathVariable int id) {
+    public ResponseEntity<?> deleteProducto(@PathVariable @Positive(message = ("id debe ser positivo")) int id) {
         productosService.deleteProducto(id);
         return ResponseEntity.noContent().build();
     }

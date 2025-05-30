@@ -35,7 +35,8 @@ public class ProductosServiceImpl implements ProductoService {
     }
 
     @Override
-    public void saveProducto(Producto producto) {
+    public Producto saveProducto(Producto producto) {
+        return producto;
     }
 
     @Override

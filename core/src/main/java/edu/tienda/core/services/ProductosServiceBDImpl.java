@@ -1,6 +1,7 @@
 package edu.tienda.core.services;
 
 import edu.tienda.core.domain.Producto;
+import edu.tienda.core.exceptions.ConflictException;
 import edu.tienda.core.exceptions.ResourceNotFoundException;
 import edu.tienda.core.persistance.entities.ProductoEntity;
 import edu.tienda.core.persistance.repositories.ProductosRepository;
@@ -34,13 +35,24 @@ public class ProductosServiceBDImpl implements ProductoService{
     }
 
     @Override
-    public void saveProducto(Producto producto){
+    public Producto saveProducto(Producto producto){
+
+        if(productosRepository.existsByNombre(producto.getNombre())){
+            throw new ConflictException("El producto ya existe");
+        }
+
         ProductoEntity productoEntity = new ProductoEntity();
         productoEntity.setNombre(producto.getNombre());
         productoEntity.setPrecio(producto.getPrecio());
         productoEntity.setStock(producto.getStock());
-
         productosRepository.save(productoEntity);
+
+        Producto nuevoProducto = new Producto();
+        nuevoProducto.setId(productoEntity.getId());
+        nuevoProducto.setNombre(productoEntity.getNombre());
+        nuevoProducto.setStock(productoEntity.getStock());
+        nuevoProducto.setPrecio(productoEntity.getPrecio());
+        return nuevoProducto;
     }
 
     @Override
@@ -66,7 +78,9 @@ public class ProductosServiceBDImpl implements ProductoService{
 
     @Override
     public void deleteProducto(int id) {
-        productosRepository.deleteById(id);
+        ProductoEntity entity = productosRepository.findById(id).
+                orElseThrow(() -> new ResourceNotFoundException("Producto con id " + id + " no encontrado"));
+        productosRepository.delete(entity);
     }
 
 
