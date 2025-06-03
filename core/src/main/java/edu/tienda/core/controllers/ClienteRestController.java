@@ -1,3 +1,5 @@
+/*
+
 package edu.tienda.core.controllers;
 
 import edu.tienda.core.domain.Cliente;
@@ -26,14 +28,14 @@ public class ClienteRestController {
         return ResponseEntity.ok(clientes);
     }
 
-    // Endpoint para obtener un cliente por su nombre de usuario (username).
-    // El parámetro debe tener exactamente 3 caracteres, de lo contrario lanza una excepción BadRequest.
-    // Si se encuentra un cliente con ese username (ignorando mayúsculas/minúsculas), lo retorna.
-    // Si no se encuentra, lanza una excepción ResourceNotFound.
-    // Endpoint to retrieve a client by their username.
-    // The username must be exactly 3 characters long, otherwise a BadRequestException is thrown.
-    // If a client with that username is found (case-insensitive), it is returned.
-    // If no client is found, a ResourceNotFoundException is thrown.
+     Endpoint para obtener un cliente por su nombre de usuario (username).
+     El parámetro debe tener exactamente 3 caracteres, de lo contrario lanza una excepción BadRequest.
+     Si se encuentra un cliente con ese username (ignorando mayúsculas/minúsculas), lo retorna.
+     Si no se encuentra, lanza una excepción ResourceNotFound.
+     Endpoint to retrieve a client by their username.
+     The username must be exactly 3 characters long, otherwise a BadRequestException is thrown.
+     If a client with that username is found (case-insensitive), it is returned.
+     If no client is found, a ResourceNotFoundException is thrown.
 
     @GetMapping("/{userName}")
     public ResponseEntity<?> getCliente(@PathVariable String userName){
@@ -76,3 +78,5 @@ public class ClienteRestController {
     }
 }
 
+
+ */
