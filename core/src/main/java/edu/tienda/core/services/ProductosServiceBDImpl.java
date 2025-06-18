@@ -45,7 +45,8 @@ public class ProductosServiceBDImpl implements ProductoService{
         productoEntity.setNombre(producto.getNombre());
         productoEntity.setPrecio(producto.getPrecio());
         productoEntity.setStock(producto.getStock());
-        productosRepository.save(productoEntity);
+        productoEntity = productosRepository.save(productoEntity); // <--- acá se guarda el ID simulado
+
 
         Producto nuevoProducto = new Producto();
         nuevoProducto.setId(productoEntity.getId());
